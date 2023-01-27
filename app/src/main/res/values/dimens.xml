@@ -1,0 +1,8 @@
+<resources>
+    <dimen name="default_space">16dp</dimen>
+    <dimen name="medium_space">8dp</dimen>
+    <dimen name="small_space">4dp</dimen>
+
+    <dimen name="default_avatar_size">32dp</dimen>
+    <dimen name="big_avatar_size">52dp</dimen>
+</resources>

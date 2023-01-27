@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="app_name">Java Assignment</string>
+
+    <string name="trending_label">Trending</string>
+    <string name="details_label">Details</string>
+
+    <string name="no_description">No description</string>
+    <string name="no_repositories">No repositories</string>
+
+</resources>
