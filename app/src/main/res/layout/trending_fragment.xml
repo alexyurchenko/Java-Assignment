@@ -6,17 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".feature.trending.presentation.TrendingFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/view_repositories"
+    <RadioGroup
+        android:id="@+id/radio_group"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:visibility="gone"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:checkedButton="@id/button_day"
+        tools:visibility="visible">
+
+        <RadioButton
+            android:id="@+id/button_day"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/day" />
+
+        <RadioButton
+            android:id="@+id/button_week"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/week" />
+
+        <RadioButton
+            android:id="@+id/button_month"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/month" />
+
+    </RadioGroup>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/view_repositories"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radio_group"
         tools:listitem="@layout/trending_item"
         tools:visibility="visible" />
+
+    <!--        <androidx.recyclerview.widget.RecyclerView-->
+    <!--            android:id="@+id/view_repositories"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:background="@color/black"-->
+    <!--            tools:listitem="@layout/trending_item" />-->
+    <!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
 
     <ProgressBar
         android:id="@+id/view_progress"

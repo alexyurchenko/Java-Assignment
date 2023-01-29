@@ -24,8 +24,9 @@ public class TrendingRepositoryImpl implements TrendingRepository {
     }
 
     @Override
-    public Single<List<Repository>> repositories() {
-        return api.repositories("created:>2023-01-18T00:00:00", "stars")
+    public Single<List<Repository>> repositories(String date) {
+        String q = "created:>" + date;
+        return api.repositories(q, "stars")
                 .map(repositoriesDto -> {
                     List<Repository> repositories = new ArrayList<>();
                     for (RepositoryDto repositoryDto : repositoriesDto.getItems()) {

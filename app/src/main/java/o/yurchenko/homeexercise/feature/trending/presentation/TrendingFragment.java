@@ -10,16 +10,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import o.yurchenko.homeexercise.COMMON;
 import o.yurchenko.homeexercise.R;
 import o.yurchenko.homeexercise.databinding.TrendingFragmentBinding;
 import o.yurchenko.homeexercise.feature.trending.api.model.Repository;
-import o.yurchenko.homeexercise.feature.trending.presentation.adapter.Callback;
 import o.yurchenko.homeexercise.feature.trending.presentation.adapter.TrendingAdapter;
 
 @AndroidEntryPoint
@@ -49,13 +50,8 @@ public class TrendingFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new TrendingAdapter(repository -> {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(COMMON.REPOSITORY_KEY, repository); // todo use parcelable
-            Navigation.findNavController(view).navigate(R.id.action_trending_to_details, bundle);
-        });
-        binding.viewRepositories.setAdapter(adapter);
-        getRepositories();
+        initUI(view);
+        getRepositories(viewModel.lastDayTrendingRepositories());
     }
 
     @Override
@@ -65,26 +61,49 @@ public class TrendingFragment extends Fragment {
         compositeDisposable.clear();
     }
 
-    private void getRepositories() {
+    private void getRepositories(Single<List<Repository>> source) {
         compositeDisposable.add(
-                viewModel.trendingRepositories()
-                        .doOnSubscribe(disposable -> {
+                source.doOnSubscribe(disposable -> {
                             binding.viewProgress.setVisibility(View.VISIBLE);
                             binding.textEmpty.setVisibility(View.GONE);
                             binding.viewRepositories.setVisibility(View.GONE);
+                            binding.radioGroup.setVisibility(View.GONE);
                         })
                         .subscribe(this::updateContent, this::showError)
         );
     }
 
+    private void initUI(View view) {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        binding.viewRepositories.setLayoutManager(layoutManager);
+        adapter = new TrendingAdapter(repository -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(COMMON.REPOSITORY_KEY, repository); // todo use parcelable
+            Navigation.findNavController(view).navigate(R.id.action_trending_to_details, bundle);
+        });
+        binding.viewRepositories.setAdapter(adapter);
+
+        binding.buttonDay.setOnClickListener(v -> {
+            getRepositories(viewModel.lastDayTrendingRepositories());
+        });
+        binding.buttonWeek.setOnClickListener(v -> {
+            getRepositories(viewModel.lastWeekTrendingRepositories());
+        });
+        binding.buttonMonth.setOnClickListener(v -> {
+            getRepositories(viewModel.lastMonthTrendingRepositories());
+        });
+    }
+
     private void updateContent(List<Repository> repositories) {
         binding.viewProgress.setVisibility(View.GONE);
         if (!repositories.isEmpty()) {
+            binding.radioGroup.setVisibility(View.VISIBLE);
             binding.viewRepositories.setVisibility(View.VISIBLE);
             binding.textEmpty.setVisibility(View.GONE);
             adapter.submitList(repositories);
         } else {
             binding.textEmpty.setVisibility(View.VISIBLE);
+            binding.radioGroup.setVisibility(View.GONE);
             binding.viewRepositories.setVisibility(View.GONE);
         }
     }

@@ -7,5 +7,5 @@ import o.yurchenko.homeexercise.feature.trending.api.model.Repository;
 
 public interface TrendingRepository {
 
-    Single<List<Repository>> repositories();
+    Single<List<Repository>> repositories(String date);
 }
