@@ -1,30 +1,38 @@
 package o.yurchenko.homeexercise.feature.trending.api.model;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
-public class Repository {
+public class Repository implements Serializable {
 
-    public Repository(long id, String name, String description, String stargazersCount, Owner owner) {
+    public Repository(long id, String name, String description, String stargazersCount,
+                      String language, String forks, Date createdAt, String htmlUrl, Owner owner) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.stargazersCount = stargazersCount;
+        this.language = language;
+        this.forks = forks;
+        this.createdAt = createdAt;
+        this.htmlUrl = htmlUrl;
         this.owner = owner;
     }
 
     private long id;
     private String name;
     private String description;
-
     private String stargazersCount;
+    private String language;
+    private String forks;
+    private Date createdAt;
+    private String htmlUrl;
     private Owner owner;
 
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -39,24 +47,28 @@ public class Repository {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getStargazersCount() {
         return stargazersCount;
     }
 
-    public void setStargazersCount(String stargazersCount) {
-        this.stargazersCount = stargazersCount;
+    public String getLanguage() {
+        return language;
+    }
+
+    public String getForks() {
+        return forks;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public String getHtmlUrl() {
+        return htmlUrl;
     }
 
     public Owner getOwner() {
         return owner;
-    }
-
-    public void setOwner(Owner owner) {
-        this.owner = owner;
     }
 
     @Override

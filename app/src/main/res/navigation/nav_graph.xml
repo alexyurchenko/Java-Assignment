@@ -12,17 +12,18 @@
         tools:layout="@layout/trending_fragment">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
+            android:id="@+id/action_trending_to_details"
             app:destination="@id/SecondFragment" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="o.yurchenko.homeexercise.feature.details.DetailsFragment"
+        android:name="o.yurchenko.homeexercise.feature.details.presentation.DetailsFragment"
         android:label="@string/details_label"
         tools:layout="@layout/details_fragment">
 
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+        <argument
+            android:name="repository"
+            app:argType="o.yurchenko.homeexercise.feature.trending.api.model.Repository" />
+        
     </fragment>
 </navigation>

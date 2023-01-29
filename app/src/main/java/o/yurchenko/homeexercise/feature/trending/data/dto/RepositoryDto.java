@@ -2,6 +2,8 @@ package o.yurchenko.homeexercise.feature.trending.data.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class RepositoryDto {
 
     private long id;
@@ -9,14 +11,16 @@ public class RepositoryDto {
     private String description;
     @SerializedName("stargazers_count")
     private String stargazersCount;
+    private String language;
+    private String forks;
+    @SerializedName("created_at")
+    private Date createdAt;
+    @SerializedName("html_url")
+    private String htmlUrl;
     private OwnerDto owner;
 
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -31,23 +35,27 @@ public class RepositoryDto {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getStargazersCount() {
         return stargazersCount;
     }
 
-    public void setStargazersCount(String stargazersCount) {
-        this.stargazersCount = stargazersCount;
+    public String getLanguage() {
+        return language;
+    }
+
+    public String getForks() {
+        return forks;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public String getHtmlUrl() {
+        return htmlUrl;
     }
 
     public OwnerDto getOwner() {
         return owner;
-    }
-
-    public void setOwner(OwnerDto owner) {
-        this.owner = owner;
     }
 }

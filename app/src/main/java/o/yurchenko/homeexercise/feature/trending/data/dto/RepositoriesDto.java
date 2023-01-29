@@ -9,8 +9,4 @@ public class RepositoriesDto {
     public List<RepositoryDto> getItems() {
         return items;
     }
-
-    public void setItems(List<RepositoryDto> items) {
-        this.items = items;
-    }
 }

@@ -8,4 +8,10 @@
     <string name="no_description">No description</string>
     <string name="no_repositories">No repositories</string>
 
+    <string name="repository_stars_count">Stars count: %1$s</string>
+    <string name="repository_forks_count">Forks count: %1$s</string>
+    <string name="repository_language">Language: %1$s</string>
+    <string name="repository_created_at">Created at: %1$s</string>
+    <string name="repository_link">Link: %1$s</string>
+
 </resources>

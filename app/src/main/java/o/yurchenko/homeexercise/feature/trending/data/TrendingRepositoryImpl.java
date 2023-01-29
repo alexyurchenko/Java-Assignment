@@ -34,6 +34,10 @@ public class TrendingRepositoryImpl implements TrendingRepository {
                                 repositoryDto.getName(),
                                 repositoryDto.getDescription(),
                                 repositoryDto.getStargazersCount(),
+                                repositoryDto.getLanguage(),
+                                repositoryDto.getForks(),
+                                repositoryDto.getCreatedAt(),
+                                repositoryDto.getHtmlUrl(),
                                 new Owner(repositoryDto.getOwner().getLogin(), repositoryDto.getOwner().getAvatarUrl())
                         );
                         repositories.add(repository);

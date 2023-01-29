@@ -1,10 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature.details.DetailsFragment">
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/default_space"
+    tools:context=".feature.details.presentation.DetailsFragment">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img_avatar"
+        android:layout_width="@dimen/big_avatar_size"
+        android:layout_height="@dimen/big_avatar_size"
+        android:contentDescription="@null"
+        tools:src="@drawable/baseline_account_circle_24" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        tools:text="Username" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_repository_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_space"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        tools:text="Repository name" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_repository_stars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_space"
+        android:drawablePadding="@dimen/small_space"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="Stars count: 12345" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_repository_forks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_space"
+        android:drawablePadding="@dimen/small_space"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="Forks count: 12345" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_repository_language"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_space"
+        android:drawablePadding="@dimen/small_space"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:visibility="gone"
+        tools:text="Java" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_repository_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_space"
+        android:drawablePadding="@dimen/small_space"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="Created: 22 Jan 2022" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_repository_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_space"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="Repository description" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_repository_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_space"
+        android:autoLink="web"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="Link" />
+
+</LinearLayout>

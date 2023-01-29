@@ -10,14 +10,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import o.yurchenko.homeexercise.R;
 import o.yurchenko.homeexercise.databinding.TrendingItemBinding;
 import o.yurchenko.homeexercise.feature.trending.api.model.Repository;
 
 public class TrendingAdapter extends ListAdapter<Repository, TrendingAdapter.ViewHolder> {
 
-    public TrendingAdapter() {
+    private Callback callback;
+
+    public TrendingAdapter(Callback callback) {
         super(new RepositoryDiffCallback());
+        this.callback = callback;
     }
 
     @NonNull
@@ -29,7 +36,7 @@ public class TrendingAdapter extends ListAdapter<Repository, TrendingAdapter.Vie
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(getItem(position));
+        holder.bind(getItem(position), callback);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -41,7 +48,7 @@ public class TrendingAdapter extends ListAdapter<Repository, TrendingAdapter.Vie
             this.binding = binding;
         }
 
-        private void bind(Repository repository) {
+        private void bind(Repository repository, Callback callback) {
             Context context = binding.getRoot().getContext();
             Glide.with(context)
                     .load(repository.getOwner().getAvatarUrl())
@@ -53,6 +60,7 @@ public class TrendingAdapter extends ListAdapter<Repository, TrendingAdapter.Vie
             String desc = repository.getDescription() != null ? repository.getDescription() : context.getString(R.string.no_description);
             binding.textRepositoryDesc.setText(desc);
             binding.textRepositoryStars.setText(repository.getStargazersCount());
+            binding.getRoot().setOnClickListener(v -> callback.clicked(repository));
         }
     }
 }
