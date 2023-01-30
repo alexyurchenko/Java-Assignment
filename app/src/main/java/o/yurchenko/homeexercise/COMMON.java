@@ -8,6 +8,8 @@ public interface COMMON {
 
     String REPOSITORY_KEY = "repository";
 
+    String FAVORITE_KEY = "favorite";
+
     String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 }

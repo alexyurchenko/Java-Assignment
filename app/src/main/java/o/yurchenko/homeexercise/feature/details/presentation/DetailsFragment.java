@@ -72,7 +72,7 @@ public class DetailsFragment extends Fragment {
                 .into(binding.imgAvatar);
         binding.textUsername.setText(repository.getOwner().getLogin());
         binding.textRepositoryName.setText(repository.getName());
-        String desc = repository.getDescription() != null ? repository.getDescription() : context.getString(R.string.no_description);
+        String desc = repository.getDescription() != null ? repository.getDescription() : context.getString(R.string.trending_no_description);
         binding.textRepositoryDesc.setText(desc);
         binding.textRepositoryStars.setText(repository.getStargazersCount());
         binding.textRepositoryForks.setText(repository.getForks());

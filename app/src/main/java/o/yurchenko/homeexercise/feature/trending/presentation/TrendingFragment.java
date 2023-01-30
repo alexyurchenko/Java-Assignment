@@ -66,13 +66,13 @@ public class TrendingFragment extends Fragment {
 
     private void initUI(View view) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        binding.viewRepositories.setLayoutManager(layoutManager);
+        binding.listRepositories.setLayoutManager(layoutManager);
         adapter = new TrendingAdapter(repository -> {
             Bundle bundle = new Bundle();
             bundle.putSerializable(COMMON.REPOSITORY_KEY, repository); // todo use parcelable
             Navigation.findNavController(view).navigate(R.id.action_trending_to_details, bundle);
         });
-        binding.viewRepositories.setAdapter(adapter);
+        binding.listRepositories.setAdapter(adapter);
 
         binding.buttonDay.setOnClickListener(v -> {
             showProgress();
@@ -92,20 +92,20 @@ public class TrendingFragment extends Fragment {
         binding.viewProgress.setVisibility(View.GONE);
         if (!repositories.isEmpty()) {
             binding.radioGroup.setVisibility(View.VISIBLE);
-            binding.viewRepositories.setVisibility(View.VISIBLE);
+            binding.listRepositories.setVisibility(View.VISIBLE);
             binding.textEmpty.setVisibility(View.GONE);
             adapter.submitList(repositories);
         } else {
             binding.textEmpty.setVisibility(View.VISIBLE);
             binding.radioGroup.setVisibility(View.GONE);
-            binding.viewRepositories.setVisibility(View.GONE);
+            binding.listRepositories.setVisibility(View.GONE);
         }
     }
 
     private void showProgress() {
         binding.viewProgress.setVisibility(View.VISIBLE);
         binding.textEmpty.setVisibility(View.GONE);
-        binding.viewRepositories.setVisibility(View.GONE);
+        binding.listRepositories.setVisibility(View.GONE);
         binding.radioGroup.setVisibility(View.GONE);
     }
 

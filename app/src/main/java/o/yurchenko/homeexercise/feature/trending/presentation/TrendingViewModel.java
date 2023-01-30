@@ -28,6 +28,7 @@ public class TrendingViewModel extends ViewModel {
     private final TrendingRepository trendingRepository;
 
     private final PublishSubject<List<Repository>> successSubject = PublishSubject.create();
+
     private final PublishSubject<Throwable> errorSubject = PublishSubject.create(); // todo map errors
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();

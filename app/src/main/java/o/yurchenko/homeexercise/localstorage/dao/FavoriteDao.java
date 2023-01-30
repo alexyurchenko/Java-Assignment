@@ -16,7 +16,7 @@ import o.yurchenko.homeexercise.localstorage.Favorite;
 public interface FavoriteDao {
 
     @Query("SELECT * FROM favorite ORDER BY stargazersCount")
-    Flowable<List<Favorite>> favorites();
+    Single<List<Favorite>> favorites();
 
     @Query("SELECT EXISTS(SELECT * FROM favorite WHERE id = :id)")
     Single<Boolean> exist(long id);

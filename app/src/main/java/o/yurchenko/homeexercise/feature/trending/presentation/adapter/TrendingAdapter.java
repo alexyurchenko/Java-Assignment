@@ -10,10 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
 import o.yurchenko.homeexercise.R;
 import o.yurchenko.homeexercise.databinding.TrendingItemBinding;
 import o.yurchenko.homeexercise.feature.trending.api.model.Repository;
@@ -57,10 +53,10 @@ public class TrendingAdapter extends ListAdapter<Repository, TrendingAdapter.Vie
                     .into(binding.imgAvatar);
             binding.textUsername.setText(repository.getOwner().getLogin());
             binding.textRepositoryName.setText(repository.getName());
-            String desc = repository.getDescription() != null ? repository.getDescription() : context.getString(R.string.no_description);
+            String desc = repository.getDescription() != null ? repository.getDescription() : context.getString(R.string.trending_no_description);
             binding.textRepositoryDesc.setText(desc);
             binding.textRepositoryStars.setText(repository.getStargazersCount());
-            binding.getRoot().setOnClickListener(v -> callback.clicked(repository));
+            binding.getRoot().setOnClickListener(v -> callback.onClick(repository));
         }
     }
 }
