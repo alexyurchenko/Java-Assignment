@@ -6,7 +6,10 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.subjects.PublishSubject;
 import o.yurchenko.homeexercise.feature.details.api.DetailsRepository;
 import o.yurchenko.homeexercise.feature.trending.api.model.Repository;
 
@@ -15,20 +18,36 @@ public class DetailsViewModel extends ViewModel {
 
     private final DetailsRepository detailsRepository;
 
+    private final PublishSubject<Boolean> favoriteSubject = PublishSubject.create();
+    private final PublishSubject<Throwable> errorSubject = PublishSubject.create(); // todo map errors
+
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+
     @Inject
     DetailsViewModel(DetailsRepository repository) {
         this.detailsRepository = repository;
     }
 
-    public Single<Boolean> isFavorite(long id) {
-        return detailsRepository.isFavorite(id);
+    public Observable<Boolean> getFavoriteSubject() {
+        return favoriteSubject.hide();
     }
 
-    public Completable addToFavorites(Repository repository) {
-        return detailsRepository.addFavorite(repository);
+    public Observable<Throwable> getErrorSubject() {
+        return errorSubject.hide();
     }
 
-    public Completable removeFromFavorites(long id) {
-        return detailsRepository.removeFavorite(id);
+    public void isFavorite(long id) {
+        compositeDisposable.add(detailsRepository.isFavorite(id)
+                        .subscribe(favoriteSubject::onNext, errorSubject::onNext));
+    }
+
+    public void addToFavorites(Repository repository) {
+        compositeDisposable.add(detailsRepository.addFavorite(repository)
+                .subscribe(() -> favoriteSubject.onNext(true), errorSubject::onNext));
+    }
+
+    public void removeFromFavorites(long id) {
+        compositeDisposable.add(detailsRepository.removeFavorite(id)
+                .subscribe(() -> favoriteSubject.onNext(false), errorSubject::onNext));
     }
 }

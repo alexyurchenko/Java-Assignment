@@ -16,7 +16,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.subjects.PublishSubject;
 import o.yurchenko.homeexercise.feature.trending.api.TrendingRepository;
 import o.yurchenko.homeexercise.feature.trending.api.model.Repository;
 
@@ -25,28 +27,50 @@ public class TrendingViewModel extends ViewModel {
 
     private final TrendingRepository trendingRepository;
 
+    private final PublishSubject<List<Repository>> successSubject = PublishSubject.create();
+    private final PublishSubject<Throwable> errorSubject = PublishSubject.create(); // todo map errors
+
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+
     @Inject
     TrendingViewModel(TrendingRepository trendingRepository) {
         this.trendingRepository = trendingRepository;
+        lastDayTrendingRepositories();
     }
 
-    public Single<List<Repository>> lastDayTrendingRepositories() {
+    public Observable<List<Repository>> getRepositories() {
+        return successSubject.hide();
+    }
+
+    public Observable<Throwable> getError() {
+        return errorSubject.hide();
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        compositeDisposable.clear();
+    }
+
+    public void lastDayTrendingRepositories() {
         String time = formattedTime(1, ChronoUnit.DAYS);
-        return trendingRepositories(time);
+        trendingRepositories(time);
     }
 
-    public Single<List<Repository>> lastWeekTrendingRepositories() {
+    public void lastWeekTrendingRepositories() {
         String time = formattedTime(7, ChronoUnit.DAYS);
-        return trendingRepositories(time);
+        trendingRepositories(time);
     }
 
-    public Single<List<Repository>> lastMonthTrendingRepositories() {
+    public void lastMonthTrendingRepositories() {
         String time = formattedTime(30, ChronoUnit.DAYS);
-        return trendingRepositories(time);
+        trendingRepositories(time);
     }
 
-    private Single<List<Repository>> trendingRepositories(String date) {
-        return trendingRepository.repositories(date);
+    private void trendingRepositories(String date) {
+        compositeDisposable.add(
+                trendingRepository.repositories(date)
+                        .subscribe(successSubject::onNext, errorSubject::onNext));
     }
 
     private String formattedTime(long amountToSubtract, TemporalUnit unit) {

@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import o.yurchenko.homeexercise.COMMON;
 import o.yurchenko.homeexercise.R;
@@ -30,7 +29,7 @@ public class TrendingFragment extends Fragment {
     private TrendingFragmentBinding binding;
     private TrendingAdapter adapter;
 
-    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,26 +50,18 @@ public class TrendingFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initUI(view);
-        getRepositories(viewModel.lastDayTrendingRepositories());
+        subscribeOnUpdates();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-        compositeDisposable.clear();
     }
 
-    private void getRepositories(Single<List<Repository>> source) {
-        compositeDisposable.add(
-                source.doOnSubscribe(disposable -> {
-                            binding.viewProgress.setVisibility(View.VISIBLE);
-                            binding.textEmpty.setVisibility(View.GONE);
-                            binding.viewRepositories.setVisibility(View.GONE);
-                            binding.radioGroup.setVisibility(View.GONE);
-                        })
-                        .subscribe(this::updateContent, this::showError)
-        );
+    private void subscribeOnUpdates() {
+        compositeDisposable.add(viewModel.getRepositories().subscribe(this::showContent, this::showError));
+        compositeDisposable.add(viewModel.getError().subscribe(this::showError, this::showError));
     }
 
     private void initUI(View view) {
@@ -84,17 +75,20 @@ public class TrendingFragment extends Fragment {
         binding.viewRepositories.setAdapter(adapter);
 
         binding.buttonDay.setOnClickListener(v -> {
-            getRepositories(viewModel.lastDayTrendingRepositories());
+            showProgress();
+            viewModel.lastDayTrendingRepositories();
         });
         binding.buttonWeek.setOnClickListener(v -> {
-            getRepositories(viewModel.lastWeekTrendingRepositories());
+            showProgress();
+            viewModel.lastWeekTrendingRepositories();
         });
         binding.buttonMonth.setOnClickListener(v -> {
-            getRepositories(viewModel.lastMonthTrendingRepositories());
+            showProgress();
+            viewModel.lastMonthTrendingRepositories();
         });
     }
 
-    private void updateContent(List<Repository> repositories) {
+    private void showContent(List<Repository> repositories) {
         binding.viewProgress.setVisibility(View.GONE);
         if (!repositories.isEmpty()) {
             binding.radioGroup.setVisibility(View.VISIBLE);
@@ -106,6 +100,13 @@ public class TrendingFragment extends Fragment {
             binding.radioGroup.setVisibility(View.GONE);
             binding.viewRepositories.setVisibility(View.GONE);
         }
+    }
+
+    private void showProgress() {
+        binding.viewProgress.setVisibility(View.VISIBLE);
+        binding.textEmpty.setVisibility(View.GONE);
+        binding.viewRepositories.setVisibility(View.GONE);
+        binding.radioGroup.setVisibility(View.GONE);
     }
 
     private void showError(Throwable throwable) {

@@ -53,6 +53,7 @@ public class DetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         updateUI(getRepository());
+        subscribeOnUpdates();
     }
 
     @Override
@@ -86,22 +87,17 @@ public class DetailsFragment extends Fragment {
         binding.textRepositoryDate.setText(date);
         binding.textRepositoryLink.setText(repository.getHtmlUrl());
 
-        getIsFavorite(repository.getId());
+        viewModel.isFavorite(repository.getId());
 
-        binding.buttonFavorite.setOnClickListener(v -> {
-            toggleFavorite(repository);
-        });
+        binding.buttonFavorite.setOnClickListener(v -> toggleFavorite(repository));
     }
 
-    private void getIsFavorite(long id) {
-        compositeDisposable.add(
-                viewModel.isFavorite(id)
-                        .subscribe(favorite -> {
-                            binding.buttonFavorite.setVisibility(View.VISIBLE);
-                            isFavorite = favorite;
-                            updateFavoriteText(favorite);
-                        }, Throwable::printStackTrace)
-        );
+    private void subscribeOnUpdates() {
+        compositeDisposable.add(viewModel.getFavoriteSubject()
+                        .subscribe(this::updateFavorite, Throwable::printStackTrace));
+
+        compositeDisposable.add(viewModel.getErrorSubject() // todo show toast?
+                .subscribe(Throwable::printStackTrace, Throwable::printStackTrace));
     }
 
     private void toggleFavorite(Repository repository) {
@@ -113,27 +109,16 @@ public class DetailsFragment extends Fragment {
     }
 
     private void addToFavorites(Repository repository) {
-        compositeDisposable.add(
-                viewModel.addToFavorites(repository)
-                        .subscribe(() -> {
-                            isFavorite = true;
-                            updateFavoriteText(true);
-                        }, Throwable::printStackTrace)
-        );
+        viewModel.addToFavorites(repository);
     }
 
     private void removeFromFavorites(long id) {
-        compositeDisposable.add(
-                viewModel.removeFromFavorites(id)
-                        .subscribe(() -> {
-                                    isFavorite = false;
-                                    updateFavoriteText(false);
-                                },
-                                Throwable::printStackTrace)
-        );
+        viewModel.removeFromFavorites(id);
     }
 
-    private void updateFavoriteText(boolean isFavorite) {
+    private void updateFavorite(boolean isFavorite) {
+        this.isFavorite = isFavorite;
+        binding.buttonFavorite.setVisibility(View.VISIBLE);
         if (isFavorite) {
             binding.buttonFavorite.setText(requireContext().getString(R.string.repository_remove_from_favorites));
         } else {
