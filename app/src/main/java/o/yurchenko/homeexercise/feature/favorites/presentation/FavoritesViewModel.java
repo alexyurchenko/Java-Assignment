@@ -48,4 +48,9 @@ public class FavoritesViewModel extends ViewModel {
         compositeDisposable.add(favoritesRepository.favorites()
                 .subscribe(successSubject::onNext, errorSubject::onNext));
     }
+
+    public void remove(long id) {
+        compositeDisposable.add(favoritesRepository.remove(id).andThen(favoritesRepository.favorites())
+                .subscribe(successSubject::onNext, errorSubject::onNext));
+    }
 }

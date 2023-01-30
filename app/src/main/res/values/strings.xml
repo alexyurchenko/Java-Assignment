@@ -28,5 +28,6 @@
     <string name="favorites_nav_item">Favorites</string>
 
     <string name="favorites_empty">No favorites</string>
+    <string name="favorites_remove">Remove</string>
 
 </resources>

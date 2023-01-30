@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import o.yurchenko.homeexercise.feature.favorites.api.FavoritesRepository;
@@ -23,6 +24,13 @@ public class FavoritesRepositoryImpl implements FavoritesRepository {
     @Override
     public Single<List<Favorite>> favorites() {
         return favoriteDao.favorites()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Completable remove(long id) {
+        return favoriteDao.removeById(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

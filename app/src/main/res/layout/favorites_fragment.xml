@@ -32,7 +32,7 @@
         android:id="@+id/text_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/trending_empty"
+        android:text="@string/favorites_empty"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

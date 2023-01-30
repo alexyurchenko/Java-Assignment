@@ -58,7 +58,7 @@ public class FavoritesFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.listFavorites.setLayoutManager(layoutManager);
         adapter = new FavoriteAdapter(favorite -> {
-            // todo add/remove favorite
+            viewModel.remove(favorite.getId());
         });
         binding.listFavorites.setAdapter(adapter);
     }

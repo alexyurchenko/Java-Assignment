@@ -56,7 +56,7 @@ public class FavoriteAdapter extends ListAdapter<Favorite, FavoriteAdapter.ViewH
             String desc = favorite.getDescription() != null ? favorite.getDescription() : context.getString(R.string.trending_no_description);
             binding.textRepositoryDesc.setText(desc);
             binding.textRepositoryStars.setText(favorite.getStargazersCount());
-            binding.getRoot().setOnClickListener(v -> callback.onClick(favorite));
+            binding.buttonRemove.setOnClickListener(v -> callback.onClick(favorite));
         }
     }
 }

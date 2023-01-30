@@ -65,6 +65,15 @@
         app:layout_constraintTop_toTopOf="@id/img_avatar"
         tools:text="Username" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/favorites_remove"
+        app:layout_constraintBottom_toBottomOf="@+id/text_username"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintTop_toTopOf="@+id/text_username" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_repository_name"
         android:layout_width="0dp"
