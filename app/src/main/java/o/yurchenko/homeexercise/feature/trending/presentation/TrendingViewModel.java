@@ -36,7 +36,6 @@ public class TrendingViewModel extends ViewModel {
     @Inject
     TrendingViewModel(TrendingRepository trendingRepository) {
         this.trendingRepository = trendingRepository;
-        lastDayTrendingRepositories();
     }
 
     public Observable<List<Repository>> getRepositories() {

@@ -47,6 +47,7 @@ public class FavoritesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initUI();
         subscribeOnUpdates();
+        viewModel.favorites();
     }
 
     private void subscribeOnUpdates() {

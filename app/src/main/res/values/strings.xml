@@ -4,7 +4,7 @@
 
     <string name="trending_label">Trending</string>
     <string name="details_label">Details</string>
-    <string name="favorites_label">Details</string>
+    <string name="favorites_label">Favorites</string>
 
     <string name="trending_no_description">No description</string>
     <string name="trending_empty">No repositories</string>

@@ -8,8 +8,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import dagger.hilt.android.AndroidEntryPoint;
 import o.yurchenko.homeexercise.databinding.MainActivityBinding;
 
@@ -29,29 +27,14 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_host_fragment_content_main).build();
+        appBarConfiguration = new AppBarConfiguration.Builder(R.id.trending_fragment, R.id.favorites_fragment).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        navView.setOnItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.navigation_trending:
-                    navController.navigate(R.id.action_global_trending);
-                    break;
-                case R.id.navigation_favorites:
-                    navController.navigate(R.id.action_global_favorites);
-                    break;
-                default:
-                    return false;
-            }
-            return true;
-        });
+        NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
+        return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
     }
 }

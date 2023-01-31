@@ -51,6 +51,7 @@ public class TrendingFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initUI(view);
         subscribeOnUpdates();
+        viewModel.lastDayTrendingRepositories();
     }
 
     @Override

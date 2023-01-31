@@ -27,7 +27,6 @@ public class FavoritesViewModel extends ViewModel {
     @Inject
     FavoritesViewModel(FavoritesRepository favoritesRepository) {
         this.favoritesRepository = favoritesRepository;
-        favorites();
     }
 
     public Observable<List<Favorite>> getFavorites() {
