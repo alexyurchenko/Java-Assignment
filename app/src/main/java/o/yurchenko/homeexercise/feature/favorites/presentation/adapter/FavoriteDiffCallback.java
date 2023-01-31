@@ -3,7 +3,7 @@ package o.yurchenko.homeexercise.feature.favorites.presentation.adapter;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
-import o.yurchenko.homeexercise.localstorage.Favorite;
+import o.yurchenko.homeexercise.localstorage.entity.Favorite;
 
 public class FavoriteDiffCallback extends DiffUtil.ItemCallback<Favorite> {
 

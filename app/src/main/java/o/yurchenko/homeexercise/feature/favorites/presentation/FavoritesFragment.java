@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import o.yurchenko.homeexercise.databinding.FavoritesFragmentBinding;
 import o.yurchenko.homeexercise.feature.favorites.presentation.adapter.FavoriteAdapter;
-import o.yurchenko.homeexercise.localstorage.Favorite;
+import o.yurchenko.homeexercise.localstorage.entity.Favorite;
 
 @AndroidEntryPoint
 public class FavoritesFragment extends Fragment {

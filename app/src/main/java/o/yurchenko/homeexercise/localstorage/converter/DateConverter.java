@@ -1,4 +1,4 @@
-package o.yurchenko.homeexercise.localstorage;
+package o.yurchenko.homeexercise.localstorage.converter;
 
 import androidx.room.TypeConverter;
 

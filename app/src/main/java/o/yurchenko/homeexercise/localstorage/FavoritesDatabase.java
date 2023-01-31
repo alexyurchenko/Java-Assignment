@@ -4,6 +4,7 @@ import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
 import o.yurchenko.homeexercise.localstorage.dao.FavoriteDao;
+import o.yurchenko.homeexercise.localstorage.entity.Favorite;
 
 @Database(
         entities = Favorite.class,

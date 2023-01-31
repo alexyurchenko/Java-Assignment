@@ -1,4 +1,4 @@
-package o.yurchenko.homeexercise.localstorage;
+package o.yurchenko.homeexercise.localstorage.entity;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -6,6 +6,8 @@ import androidx.room.TypeConverters;
 
 import java.util.Date;
 import java.util.Objects;
+
+import o.yurchenko.homeexercise.localstorage.converter.DateConverter;
 
 @Entity(tableName = "favorite")
 @TypeConverters(DateConverter.class)

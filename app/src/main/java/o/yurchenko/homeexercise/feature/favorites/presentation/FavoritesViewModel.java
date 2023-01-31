@@ -11,7 +11,7 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 import o.yurchenko.homeexercise.feature.favorites.api.FavoritesRepository;
-import o.yurchenko.homeexercise.localstorage.Favorite;
+import o.yurchenko.homeexercise.localstorage.entity.Favorite;
 
 @HiltViewModel
 public class FavoritesViewModel extends ViewModel {

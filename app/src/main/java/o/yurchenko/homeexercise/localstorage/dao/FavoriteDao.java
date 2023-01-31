@@ -8,9 +8,8 @@ import androidx.room.Query;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
-import o.yurchenko.homeexercise.localstorage.Favorite;
+import o.yurchenko.homeexercise.localstorage.entity.Favorite;
 
 @Dao
 public interface FavoriteDao {

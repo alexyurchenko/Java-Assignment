@@ -9,7 +9,7 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import o.yurchenko.homeexercise.feature.favorites.api.FavoritesRepository;
-import o.yurchenko.homeexercise.localstorage.Favorite;
+import o.yurchenko.homeexercise.localstorage.entity.Favorite;
 import o.yurchenko.homeexercise.localstorage.dao.FavoriteDao;
 
 public class FavoritesRepositoryImpl implements FavoritesRepository {
