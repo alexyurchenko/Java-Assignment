@@ -40,7 +40,7 @@ This component is used for image loading and caching, which enhances the user ex
 
 
 
-## Features you didn't implement.
+## Features aren't implemented
 1. Infinite scrolling(Paging library)
 2. UI that is better suitable for tablets
 3. Search
