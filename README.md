@@ -38,6 +38,11 @@ This is used for managing the navigation between fragments, which helps to creat
 #### Glide:
 This component is used for image loading and caching, which enhances the user experience by reducing image loading time.
 
+#### View binding:
+It provides a type-safe and efficient way to access views in an XML layout file.
+It eliminates potential null pointer exceptions and reduces code verbosity compared to traditional findViewById method.
+It leads to easier maintenance, fewer crashes, and improved overall reliability of the app.
+
 
 
 ## Features aren't implemented
