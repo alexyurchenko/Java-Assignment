@@ -19,7 +19,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import o.yurchenko.homeexercise.COMMON;
 import o.yurchenko.homeexercise.R;
 import o.yurchenko.homeexercise.databinding.TrendingFragmentBinding;
-import o.yurchenko.homeexercise.feature.trending.api.model.Repository;
+import o.yurchenko.homeexercise.localstorage.trending.entity.Repository;
 import o.yurchenko.homeexercise.feature.trending.presentation.adapter.TrendingAdapter;
 
 @AndroidEntryPoint
@@ -56,6 +56,7 @@ public class TrendingFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        compositeDisposable.clear();
         binding = null;
     }
 
@@ -69,7 +70,7 @@ public class TrendingFragment extends Fragment {
         binding.listRepositories.setLayoutManager(layoutManager);
         adapter = new TrendingAdapter(repository -> {
             Bundle bundle = new Bundle();
-            bundle.putSerializable(COMMON.REPOSITORY_KEY, repository); // todo use parcelable
+            bundle.putLong(COMMON.REPOSITORY_ID_KEY, repository.getId());
             Navigation.findNavController(view).navigate(R.id.action_trending_to_details, bundle);
         });
         binding.listRepositories.setAdapter(adapter);

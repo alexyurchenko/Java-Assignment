@@ -7,17 +7,27 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import o.yurchenko.homeexercise.feature.details.api.DetailsRepository;
-import o.yurchenko.homeexercise.feature.trending.api.model.Repository;
-import o.yurchenko.homeexercise.localstorage.entity.Favorite;
-import o.yurchenko.homeexercise.localstorage.dao.FavoriteDao;
+import o.yurchenko.homeexercise.localstorage.favorites.dao.FavoriteDao;
+import o.yurchenko.homeexercise.localstorage.favorites.entity.Favorite;
+import o.yurchenko.homeexercise.localstorage.trending.dao.TrendingDao;
+import o.yurchenko.homeexercise.localstorage.trending.entity.Repository;
 
 public class DetailsRepositoryImpl implements DetailsRepository {
 
+    private TrendingDao trendingDao;
     private FavoriteDao favoriteDao;
 
     @Inject
-    public DetailsRepositoryImpl(FavoriteDao favoriteDao) {
+    public DetailsRepositoryImpl(TrendingDao trendingDao, FavoriteDao favoriteDao) {
+        this.trendingDao = trendingDao;
         this.favoriteDao = favoriteDao;
+    }
+
+    @Override
+    public Single<Repository> repository(long id) {
+        return trendingDao.repositoryById(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
@@ -41,7 +51,7 @@ public class DetailsRepositoryImpl implements DetailsRepository {
                 repository.getOwner().getLogin(),
                 repository.getOwner().getAvatarUrl()
         );
-        return favoriteDao.addFavorite(favorite)
+        return favoriteDao.insert(favorite)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

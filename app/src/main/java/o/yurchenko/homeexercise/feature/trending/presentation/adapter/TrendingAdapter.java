@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 
 import o.yurchenko.homeexercise.R;
 import o.yurchenko.homeexercise.databinding.TrendingItemBinding;
-import o.yurchenko.homeexercise.feature.trending.api.model.Repository;
+import o.yurchenko.homeexercise.localstorage.trending.entity.Repository;
 
 public class TrendingAdapter extends ListAdapter<Repository, TrendingAdapter.ViewHolder> {
 

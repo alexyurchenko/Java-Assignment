@@ -22,7 +22,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import o.yurchenko.homeexercise.COMMON;
 import o.yurchenko.homeexercise.R;
 import o.yurchenko.homeexercise.databinding.DetailsFragmentBinding;
-import o.yurchenko.homeexercise.feature.trending.api.model.Repository;
+import o.yurchenko.homeexercise.localstorage.trending.entity.Repository;
 
 @AndroidEntryPoint
 public class DetailsFragment extends Fragment {
@@ -52,8 +52,10 @@ public class DetailsFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        updateUI(getRepository());
+        long repositoryId = getRepositoryId();
+        initUI(repositoryId);
         subscribeOnUpdates();
+        viewModel.repository(repositoryId);
     }
 
     @Override
@@ -63,7 +65,36 @@ public class DetailsFragment extends Fragment {
         compositeDisposable.clear();
     }
 
-    private void updateUI(Repository repository) {
+    private void initUI(long repositoryId) {
+        binding.buttonFavorite.setOnClickListener(v -> toggleFavorite(repositoryId));
+    }
+
+    private void subscribeOnUpdates() {
+        compositeDisposable.add(viewModel.getRepository()
+                .subscribe(this::updateContent, Throwable::printStackTrace));
+        compositeDisposable.add(viewModel.getIsFavorite()
+                        .subscribe(this::updateFavorite, Throwable::printStackTrace));
+        compositeDisposable.add(viewModel.getError() // todo show toast?
+                .subscribe(Throwable::printStackTrace, Throwable::printStackTrace));
+    }
+
+    private void toggleFavorite(long repositoryId) {
+        if (isFavorite) {
+            removeFromFavorites(repositoryId);
+        } else {
+            addToFavorites(repositoryId);
+        }
+    }
+
+    private void addToFavorites(long repositoryId) {
+        viewModel.addToFavorites(repositoryId);
+    }
+
+    private void removeFromFavorites(long id) {
+        viewModel.removeFromFavorites(id);
+    }
+
+    private void updateContent(Repository repository) {
         Context context = binding.getRoot().getContext();
         Glide.with(context)
                 .load(repository.getOwner().getAvatarUrl())
@@ -86,34 +117,6 @@ public class DetailsFragment extends Fragment {
         String date = df.format(repository.getCreatedAt());
         binding.textRepositoryDate.setText(date);
         binding.textRepositoryLink.setText(repository.getHtmlUrl());
-
-        viewModel.isFavorite(repository.getId());
-
-        binding.buttonFavorite.setOnClickListener(v -> toggleFavorite(repository));
-    }
-
-    private void subscribeOnUpdates() {
-        compositeDisposable.add(viewModel.getFavoriteSubject()
-                        .subscribe(this::updateFavorite, Throwable::printStackTrace));
-
-        compositeDisposable.add(viewModel.getErrorSubject() // todo show toast?
-                .subscribe(Throwable::printStackTrace, Throwable::printStackTrace));
-    }
-
-    private void toggleFavorite(Repository repository) {
-        if (isFavorite) {
-            removeFromFavorites(repository.getId());
-        } else {
-            addToFavorites(repository);
-        }
-    }
-
-    private void addToFavorites(Repository repository) {
-        viewModel.addToFavorites(repository);
-    }
-
-    private void removeFromFavorites(long id) {
-        viewModel.removeFromFavorites(id);
     }
 
     private void updateFavorite(boolean isFavorite) {
@@ -126,7 +129,7 @@ public class DetailsFragment extends Fragment {
         }
     }
 
-    private Repository getRepository() {
-        return (Repository) getArguments().getSerializable(COMMON.REPOSITORY_KEY);
+    private long getRepositoryId() {
+        return getArguments().getLong(COMMON.REPOSITORY_ID_KEY);
     }
 }

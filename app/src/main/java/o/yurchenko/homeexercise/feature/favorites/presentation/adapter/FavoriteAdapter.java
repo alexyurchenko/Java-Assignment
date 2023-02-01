@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 
 import o.yurchenko.homeexercise.R;
 import o.yurchenko.homeexercise.databinding.FavoriteItemBinding;
-import o.yurchenko.homeexercise.localstorage.entity.Favorite;
+import o.yurchenko.homeexercise.localstorage.favorites.entity.Favorite;
 
 public class FavoriteAdapter extends ListAdapter<Favorite, FavoriteAdapter.ViewHolder> {
 

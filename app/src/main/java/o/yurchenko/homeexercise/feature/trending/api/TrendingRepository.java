@@ -2,10 +2,13 @@ package o.yurchenko.homeexercise.feature.trending.api;
 
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Single;
-import o.yurchenko.homeexercise.feature.trending.api.model.Repository;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+import o.yurchenko.homeexercise.localstorage.trending.entity.Repository;
 
 public interface TrendingRepository {
 
-    Single<List<Repository>> repositories(String date);
+    Completable loadRepositories(String date);
+
+    Flowable<List<Repository>> repositories();
 }

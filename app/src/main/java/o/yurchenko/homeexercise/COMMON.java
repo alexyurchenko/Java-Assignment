@@ -6,7 +6,7 @@ public interface COMMON {
 
     String BASE_URL = "https://api.github.com/";
 
-    String REPOSITORY_KEY = "repository";
+    String REPOSITORY_ID_KEY = "repository_id";
 
     String FAVORITE_KEY = "favorite";
 

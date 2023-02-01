@@ -21,7 +21,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 import o.yurchenko.homeexercise.feature.trending.api.TrendingRepository;
-import o.yurchenko.homeexercise.feature.trending.api.model.Repository;
+import o.yurchenko.homeexercise.localstorage.trending.entity.Repository;
 
 @HiltViewModel
 public class TrendingViewModel extends ViewModel {
@@ -37,6 +37,7 @@ public class TrendingViewModel extends ViewModel {
     @Inject
     TrendingViewModel(TrendingRepository trendingRepository) {
         this.trendingRepository = trendingRepository;
+        trendingRepositories();
         lastDayTrendingRepositories();
     }
 
@@ -56,23 +57,28 @@ public class TrendingViewModel extends ViewModel {
 
     public void lastDayTrendingRepositories() {
         String time = formattedTime(1, ChronoUnit.DAYS);
-        trendingRepositories(time);
+        loadTrendingRepositories(time);
     }
 
     public void lastWeekTrendingRepositories() {
         String time = formattedTime(7, ChronoUnit.DAYS);
-        trendingRepositories(time);
+        loadTrendingRepositories(time);
     }
 
     public void lastMonthTrendingRepositories() {
         String time = formattedTime(30, ChronoUnit.DAYS);
-        trendingRepositories(time);
+        loadTrendingRepositories(time);
     }
 
-    private void trendingRepositories(String date) {
-        compositeDisposable.add(
-                trendingRepository.repositories(date)
-                        .subscribe(successSubject::onNext, errorSubject::onNext));
+    private void trendingRepositories() {
+        compositeDisposable.add(trendingRepository.repositories()
+                .subscribe(successSubject::onNext, errorSubject::onNext));
+    }
+
+    private void loadTrendingRepositories(String date) {
+        compositeDisposable.add(trendingRepository.loadRepositories(date)
+                .subscribe(() -> {
+                }, errorSubject::onNext));
     }
 
     private String formattedTime(long amountToSubtract, TemporalUnit unit) {

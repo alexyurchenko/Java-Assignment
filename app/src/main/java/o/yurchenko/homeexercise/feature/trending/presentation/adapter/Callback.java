@@ -1,6 +1,6 @@
 package o.yurchenko.homeexercise.feature.trending.presentation.adapter;
 
-import o.yurchenko.homeexercise.feature.trending.api.model.Repository;
+import o.yurchenko.homeexercise.localstorage.trending.entity.Repository;
 
 public interface Callback {
 

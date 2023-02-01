@@ -1,9 +1,18 @@
-package o.yurchenko.homeexercise.feature.trending.api.model;
+package o.yurchenko.homeexercise.localstorage.trending.entity;
+
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import o.yurchenko.homeexercise.localstorage.converter.DateConverter;
+
+@Entity(tableName = "trending_repositories")
+@TypeConverters(DateConverter.class)
 public class Repository implements Serializable {
 
     public Repository(long id, String name, String description, String stargazersCount,
@@ -19,6 +28,7 @@ public class Repository implements Serializable {
         this.owner = owner;
     }
 
+    @PrimaryKey
     private long id;
     private String name;
     private String description;
@@ -27,6 +37,7 @@ public class Repository implements Serializable {
     private String forks;
     private Date createdAt;
     private String htmlUrl;
+    @Embedded
     private Owner owner;
 
     public long getId() {

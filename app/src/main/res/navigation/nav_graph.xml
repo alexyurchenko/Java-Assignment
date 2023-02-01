@@ -27,8 +27,9 @@
         tools:layout="@layout/details_fragment">
 
         <argument
-            android:name="repository"
-            app:argType="o.yurchenko.homeexercise.feature.trending.api.model.Repository" />
+            android:name="repositoryId"
+            android:defaultValue="0L"
+            app:argType="long" />
 
     </fragment>
 

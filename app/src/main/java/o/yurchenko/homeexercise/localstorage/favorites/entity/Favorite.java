@@ -1,4 +1,4 @@
-package o.yurchenko.homeexercise.localstorage.entity;
+package o.yurchenko.homeexercise.localstorage.favorites.entity;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

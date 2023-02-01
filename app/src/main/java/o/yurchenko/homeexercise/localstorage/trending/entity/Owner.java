@@ -1,4 +1,4 @@
-package o.yurchenko.homeexercise.feature.trending.api.model;
+package o.yurchenko.homeexercise.localstorage.trending.entity;
 
 import java.util.Objects;
 

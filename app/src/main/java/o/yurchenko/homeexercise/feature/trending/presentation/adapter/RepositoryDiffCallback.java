@@ -3,7 +3,7 @@ package o.yurchenko.homeexercise.feature.trending.presentation.adapter;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
-import o.yurchenko.homeexercise.feature.trending.api.model.Repository;
+import o.yurchenko.homeexercise.localstorage.trending.entity.Repository;
 
 public class RepositoryDiffCallback extends DiffUtil.ItemCallback<Repository> {
 
