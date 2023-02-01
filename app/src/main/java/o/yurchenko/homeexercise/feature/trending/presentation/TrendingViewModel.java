@@ -18,6 +18,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 import o.yurchenko.homeexercise.feature.trending.api.TrendingRepository;
 import o.yurchenko.homeexercise.feature.trending.api.model.Repository;
@@ -27,7 +28,7 @@ public class TrendingViewModel extends ViewModel {
 
     private final TrendingRepository trendingRepository;
 
-    private final PublishSubject<List<Repository>> successSubject = PublishSubject.create();
+    private final BehaviorSubject<List<Repository>> successSubject = BehaviorSubject.create();
 
     private final PublishSubject<Throwable> errorSubject = PublishSubject.create(); // todo map errors
 
@@ -36,6 +37,7 @@ public class TrendingViewModel extends ViewModel {
     @Inject
     TrendingViewModel(TrendingRepository trendingRepository) {
         this.trendingRepository = trendingRepository;
+        lastDayTrendingRepositories();
     }
 
     public Observable<List<Repository>> getRepositories() {

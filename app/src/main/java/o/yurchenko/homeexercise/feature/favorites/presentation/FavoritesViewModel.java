@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 import o.yurchenko.homeexercise.feature.favorites.api.FavoritesRepository;
 import o.yurchenko.homeexercise.localstorage.entity.Favorite;
@@ -18,7 +19,7 @@ public class FavoritesViewModel extends ViewModel {
 
     private FavoritesRepository favoritesRepository;
 
-    private final PublishSubject<List<Favorite>> successSubject = PublishSubject.create();
+    private final BehaviorSubject<List<Favorite>> successSubject = BehaviorSubject.create();
 
     private final PublishSubject<Throwable> errorSubject = PublishSubject.create(); // todo map errors
 
@@ -27,6 +28,7 @@ public class FavoritesViewModel extends ViewModel {
     @Inject
     FavoritesViewModel(FavoritesRepository favoritesRepository) {
         this.favoritesRepository = favoritesRepository;
+        favorites();
     }
 
     public Observable<List<Favorite>> getFavorites() {
